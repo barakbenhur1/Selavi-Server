@@ -41,7 +41,7 @@ const mongoose = require('mongoose')
 
 mongoose.set('strictQuery', true);
 
-mongoose.connect('mongodb+srv://bbh:ZzNCY7UfJZLJdn3C@atlascluster.umpyuyl.mongodb.net/selaviç').then(() => console.log("db connected")).catch((err => console.log(err)))
+mongoose.connect('mongodb+srv://barakbenhur:C76i8cBGShScuSZQ@cluster0.shkokbc.mongodb.net/').then(() => console.log("db connected")).catch((err => console.log(err)))
 
 const { v4: uuidv4 } = require('uuid');
 
