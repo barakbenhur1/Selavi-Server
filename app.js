@@ -7,6 +7,7 @@ const server = app.listen(3000, () => {
 })
 
 const login = require("./Routers/login");
+const content = require("./Routers/content");
 
 const https = require('https')
 
@@ -61,6 +62,7 @@ app.use((req, res, next) => {
 });
 
 app.use("/login", login)
+app.use("/content", content)
 
 app.get('/', (req, res) => {
 	res.send('hello world 2');
