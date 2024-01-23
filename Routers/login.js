@@ -17,21 +17,28 @@ router.post('/signup', function (req, res) {
 })
 
 async function login(email, password, res) {
+    let id = ""
+    let name = ""
+    let status = 404
+
     let login = await Login.findOne({ email: email })
-    if (login.password == password) {
-        res.setHeader('Content-Type', 'application/json')
-        res.end(JSON.stringify
-            (
-                {
-                    id: login.id,
-                    name: login.name
-                }
-            )
+
+    if (login != null && login.password == password) {
+        id = login.id
+        name = login.name
+        status = 200
+    }
+
+    res.setHeader('Content-Type', 'application/json')
+    res.end(JSON.stringify
+        (
+            {
+                id: id,
+                name: name,
+                status: status
+            }
         )
-    }
-    else {
-        res.sendStatus(500)
-    }
+    )
 }
 
 async function signup(name, email, password, res) {
@@ -44,7 +51,7 @@ async function signup(name, email, password, res) {
             followed: []
         }
     )
-    login.save()
+    await login.save()
     res.setHeader('Content-Type', 'application/json')
     res.end(JSON.stringify({ success: true }))
 }

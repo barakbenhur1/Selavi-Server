@@ -15,7 +15,7 @@ router.post('/all', function (req, res) {
 
 router.post('/save', function (req, res) {
     const id = req.body.id
-    const content = req.body.content
+    const content = req.body.urls
     save(id, content, res)
 })
 
@@ -25,12 +25,13 @@ async function get(id, res) {
 }
 
 async function getAll(id, res) {
-    let profile = Profile.findOne({id: id}, "followed")
+    let profile = await Profile.findOne({ id: id }, "followed")
     let content = []
-    for (i = 0; i < profile.followed.length; i++) {
-        let c = await Content.find({ id: profile.followed[i] })
+    let followed = profile.followed ?? []
+    for (i = 0; i < followed.length; i++) {
+        let c = await Content.find({ id: followed[i] })
         for (j = 0; j < c.length; j++) {
-            content.push(c[i])
+            content.push(c[j])
         }
     }
     res.end(JSON.stringify(content))
@@ -42,22 +43,28 @@ async function save(id, vals, res) {
 
     for (i = 0; i < split.length; i++) {
         let keyValue = split[i].split("±")
-        values.push(
-            {
-                type: keyValue[0],
-                value: keyValue[1]
-            }
-        )
+        values.push
+            (
+                {
+                    assetType: keyValue[1],
+                    value: keyValue[0]
+                }
+            )
     }
 
-    let content = await Content(
-        {
-            id: id,
-            values: values
-        }
-    )
+    let profile = await Profile.findOne({ id: id })
 
-    content.save()
+    let c =
+    {
+        id: id,
+        name: profile.name,
+        content: values
+    }
+
+    let content = await Content(c)
+
+    await content.save()
+    
     res.end(JSON.stringify({ success: true }))
 }
 

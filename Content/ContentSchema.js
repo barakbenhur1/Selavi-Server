@@ -1,11 +1,14 @@
-const schema = {
+const schema =
+{
     "id": String,
-    "content": [
-        {
-            type: String,
-            value: String
-        }
-    ]
+    "name": String,
+    "content":
+        [
+            {
+                "assetType": String,
+                "value": String
+            }
+        ]
 }
 
 module.exports = schema

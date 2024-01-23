@@ -1,4 +1,5 @@
-const schema = {
+const schema =
+{
     "id": String,
     "email": String,
     "password": String,

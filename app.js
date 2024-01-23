@@ -8,6 +8,7 @@ const server = app.listen(3000, () => {
 
 const login = require("./Routers/login");
 const content = require("./Routers/content");
+const profile = require("./Routers/profile");
 
 const https = require('https')
 
@@ -41,7 +42,7 @@ const mongoose = require('mongoose')
 
 mongoose.set('strictQuery', true);
 
-mongoose.connect('mongodb+srv://barakbenhur:C76i8cBGShScuSZQ@cluster0.shkokbc.mongodb.net/').then(() => console.log("db connected")).catch((err => console.log(err)))
+mongoose.connect('mongodb+srv://barakbenhur:C76i8cBGShScuSZQ@cluster0.shkokbc.mongodb.net/selavi').then(() => console.log("db connected")).catch((err => console.log(err)))
 
 const { v4: uuidv4 } = require('uuid');
 
@@ -63,6 +64,7 @@ app.use((req, res, next) => {
 
 app.use("/login", login)
 app.use("/content", content)
+app.use("/profile", profile)
 
 app.get('/', (req, res) => {
 	res.send('hello world 2');
